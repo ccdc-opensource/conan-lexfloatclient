@@ -1,13 +1,13 @@
-#include <LexActivator.h>
+#include <LexFloatClient.h>
 #include <stdlib.h>
 
 int main() {
 #if _WIN32
-	int status = SetProductData(L"foo");
+	int status = SetHostProductId(L"foo");
 #else
-	int status = SetProductData("bar");
+	int status = SetHostProductId("bar");
 #endif
-	if (LA_OK == status)
+	if (LF_OK == status)
 	{
 		return EXIT_FAILURE;
 	}
