@@ -5,14 +5,14 @@
         "sha256": "f4dfd167c8eee5c651d648817b4ff4036ad5558c09ea6f6ddd63fd9e2bc404ef"
         "url": "https://dl.cryptlex.com/downloads/v4.3.5/LexFloatClient-Linux.zip"
       "static":
-        "sha256": "458bbdb095c317fab1bad0d5ceae293d4f5896d013c3495bf608379b70ca081b"
+        "sha256": "cabc46a035e76fb697241fe08216aa4a4b58367a8d54781b04d922e20a4869b5"
         "url": "https://dl.cryptlex.com/downloads/v4.3.5/LexFloatClient-Static-Linux.zip"
     "Macos":
       "shared":
         "sha256": "44b127cd556b700f805c6fc4c237eeec3973efc51d56c98c59aaea8dc25ee5b1"
         "url": "https://dl.cryptlex.com/downloads/v4.3.5/LexFloatClient-Mac.zip"
       "static":
-        "sha256": "3b1f9f6617b7d32fbc01a65dd11f9df0547f4e6bbe905c893434975c0f434918"
+        "sha256": "8c0ba27ca0a6d3bfa288964862f345d115a1407a8ec897cf932fe94ae966f7db"
         "url": "https://dl.cryptlex.com/downloads/v4.3.5/LexFloatClient-Static-Mac.zip"
     "Windows": # No static libraries on windows
       "shared":
