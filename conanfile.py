@@ -76,6 +76,7 @@ class ConanLexFloatClient(ConanFile):
             self.copy("*.a", dst="lib", src=self._package_lib_dir)
 
     def package_info(self):
+        self.env_info.LEXFLOATCLIENTDIR = self.package_folder
         self.cpp_info.libs = tools.collect_libs(self)
 
         if self.settings.os == "Linux" and not self.options.shared:
