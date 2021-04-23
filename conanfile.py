@@ -5,7 +5,7 @@ from conans.errors import ConanInvalidConfiguration
 
 class ConanLexFloatClient(ConanFile):
     name = "lexfloatclient"
-    version = '4.3.10'
+    version = '4.5.2'
     description = "LexFloatClient licensing library"
     url = "https://app.cryptlex.com/downloads"
     homepage = "https://cryptlex.com/"
@@ -23,13 +23,11 @@ class ConanLexFloatClient(ConanFile):
     def _la_libname(self):
         return 'LexFloatClient'
     
-    def configure(self):
-        if self.settings.os == "Windows" and not self.options.shared:
-            raise ConanInvalidConfiguration('Static libraries are not available on windows')
-
     def source(self):
         tools.get(**self.conan_data["sources"][self.version][str(self.settings.os)]['shared'])
-        if self.settings.os != "Windows":
+        if self.settings.os == "Windows":
+            tools.get(**self.conan_data["sources"][self.version][str(self.settings.os)]['static']
+        else:
             tools.get(**self.conan_data["sources"][self.version][str(self.settings.os)]['static'])
 
     @property
@@ -39,8 +37,8 @@ class ConanLexFloatClient(ConanFile):
             la_arch = {
                 'x86': 'i386',
                 'x86_64': 'amd64',
-                # TODO: map armv5el, armv5hf, armv6, armv7, armv7hf, armv7s, armv7k, armv8, armv8_32, armv8.3
-                # to arm64, armel, armhf
+                'armv8': 'arm64',
+                'armv8.3': 'arm64',
             }[str(self.settings.arch)]
             return os.path.join('libs', compiler, la_arch)
 
@@ -61,7 +59,15 @@ class ConanLexFloatClient(ConanFile):
                     return os.path.join('libs', la_arch)
 
         if self.settings.os == 'Macos':
-            return os.path.join('libs', 'clang', 'x86_64')
+            if self.options.shared:
+                la_arch = {
+                    'x86_64': 'x86_64',
+                    'armv8': 'arm64',
+                    'armv8.3': 'arm64',
+                }[str(self.settings.arch)]
+                return os.path.join('libs', 'clang', la_arch)
+            else:
+                return os.path.join('libs', 'clang', 'universal')
         raise ConanInvalidConfiguration('Libraries for this configuration are not available')
 
     def system_requirements(self):
@@ -103,8 +109,3 @@ class ConanLexFloatClient(ConanFile):
 
         self.cpp_info.names["cmake_find_package"] = self._la_libname
         self.cpp_info.names["cmake_find_package_multi"] = self._la_libname
-
-    def package_id(self):
-        # we don't really care about the compiler version, unless we're on windows
-        if self.settings.os != "Windows":
-            self.info.settings.compiler.version = "any"
