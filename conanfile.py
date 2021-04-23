@@ -26,7 +26,7 @@ class ConanLexFloatClient(ConanFile):
     def source(self):
         tools.get(**self.conan_data["sources"][self.version][str(self.settings.os)]['shared'])
         if self.settings.os == "Windows":
-            tools.get(**self.conan_data["sources"][self.version][str(self.settings.os)]['static']
+            tools.get(**self.conan_data["sources"][self.version][str(self.settings.os)]['static'])
         else:
             tools.get(**self.conan_data["sources"][self.version][str(self.settings.os)]['static'])
 
