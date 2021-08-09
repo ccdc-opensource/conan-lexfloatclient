@@ -96,6 +96,19 @@ class ConanLexFloatClient(ConanFile):
             self.copy("LexFloatClient.lib", dst="lib", src=self._package_lib_dir)
         else:
             self.copy("*.a", dst="lib", src=self._package_lib_dir)
+            if self.settings.os == 'Windows':
+                if self.settings.compiler.runtime == 'MT':
+                    self.copy("LexFloatClient.lib", dst="lib", src=self._package_lib_dir)
+                    self.copy("libcurl_MT.lib", dst="lib", src=self._package_lib_dir)
+                if self.settings.compiler.runtime == 'MTd':
+                    self.copy("LexFloatClientd.lib", dst="lib", src=self._package_lib_dir)
+                    self.copy("libcurl_MTd.lib", dst="lib", src=self._package_lib_dir)
+                if self.settings.compiler.runtime == 'MD':
+                    self.copy("LexFloatClient.lib", dst="lib", src=self._package_lib_dir)
+                    self.copy("libcurl_MD.lib", dst="lib", src=self._package_lib_dir)
+                if self.settings.compiler.runtime == 'MDd':
+                    self.copy("LexFloatClientd.lib", dst="lib", src=self._package_lib_dir)
+                    self.copy("libcurl_MDd.lib", dst="lib", src=self._package_lib_dir)
 
     def package_info(self):
         self.env_info.LEXFLOATCLIENTDIR = self.package_folder
@@ -107,6 +120,10 @@ class ConanLexFloatClient(ConanFile):
             self.cpp_info.frameworks.extend(["CoreFoundation", "SystemConfiguration", "Security"])
         if self.settings.os == "Windows" and self.options.shared:
             self.env_info.path.append(os.path.join(self.package_folder, "bin"))
+
+        if self.settings.os == "Windows" and not self.options.shared:
+            self.cpp_info.defines.append('LEXFLOATCLIENT_STATIC')
+            self.cpp_info.system_libs.extend(["winhttp"])
 
         self.cpp_info.names["cmake_find_package"] = self._la_libname
         self.cpp_info.names["cmake_find_package_multi"] = self._la_libname
