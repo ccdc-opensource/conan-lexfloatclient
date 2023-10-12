@@ -5,7 +5,7 @@ from conans.errors import ConanInvalidConfiguration
 
 class ConanLexFloatClient(ConanFile):
     name = "lexfloatclient"
-    version = '4.5.2'
+    version = '4.7.2'
     description = "LexFloatClient licensing library"
     url = "https://app.cryptlex.com/downloads"
     homepage = "https://cryptlex.com/"
